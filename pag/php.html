@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" href="../imgCodBeg/icon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="../css/main.css" rel="stylesheet">
+  <script src="../js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <title>PHP - CodBeg</title>
+</head>
+
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <section class="course-banner">
+    <div class="container">
+      <h1>Curso de PHP</h1>
+      <p class="course-description">Aprenda PHP, a linguagem de programação server-side mais popular para desenvolvimento web. PHP permite criar aplicações dinâmicas e interativas no lado do servidor.</p>
+    </div>
+  </section>
+
+  <main class="course-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2>Vídeos do Curso</h2>
+          <p>Assista aos vídeos abaixo para aprender PHP do básico ao avançado:</p>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/videoseries?list=PLHz_AreHm4dm4beCCCmW4xwpmLf6EHY9k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="mt-4">
+            <button id="video-watched-btn" class="btn btn-primary" onclick="markVideoWatched('php')">Marcar Vídeo como Assistido</button>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="quiz-section">
+            <h3>Quiz do Curso</h3>
+            <p>Responda às perguntas abaixo para completar o curso:</p>
+            <div id="quiz-php">
+              <!-- Quiz questions will be loaded here -->
+            </div>
+            <button id="submit-quiz-php" class="btn btn-primary mt-3" onclick="submitQuiz('php')">Enviar Respostas</button>
+            <div id="quiz-result-php" class="quiz-result mt-3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 text-center">
+        <a href="java.html" class="btn btn-outline-secondary me-2">Voltar: Java</a>
+        <a href="../index.html" class="btn btn-primary">Voltar ao Início</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/quiz.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</body>
+
+</html>

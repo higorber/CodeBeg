@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" href="../imgCodBeg/icon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="../css/main.css" rel="stylesheet">
+  <script src="../js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <title>CSS - CodBeg</title>
+</head>
+
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <section class="course-banner">
+    <div class="container">
+      <h1>Curso de CSS</h1>
+      <p class="course-description">Aprenda Cascading Style Sheets (CSS) para estilizar páginas web. CSS permite controlar cores, layouts, fontes e muito mais para criar interfaces atraentes.</p>
+    </div>
+  </section>
+
+  <main class="course-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2>Vídeos do Curso</h2>
+          <p>Assista aos vídeos abaixo para aprender CSS do básico ao avançado:</p>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/videoseries?list=PLUqYHcZLVa6YfYlK_rLA1Sk8doeYZJRZN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="mt-4">
+            <button id="video-watched-btn" class="btn btn-primary" onclick="markVideoWatched('css')">Marcar Vídeo como Assistido</button>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="quiz-section">
+            <h3>Quiz do Curso</h3>
+            <p>Responda às perguntas abaixo para completar o curso:</p>
+            <div id="quiz-css">
+              <!-- Quiz questions will be loaded here -->
+            </div>
+            <button id="submit-quiz-css" class="btn btn-primary mt-3" onclick="submitQuiz('css')">Enviar Respostas</button>
+            <div id="quiz-result-css" class="quiz-result mt-3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 text-center">
+        <a href="html.html" class="btn btn-outline-secondary me-2">Voltar: HTML</a>
+        <a href="js.html" class="btn btn-primary">Próximo: JavaScript</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/footer.js"></script>
+  <script src="../js/quiz.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</body>
+
+</html>
