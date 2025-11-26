@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link href="../css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="../js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <title>CSS - CodBeg</title>
 </head>
@@ -15,10 +16,12 @@
 <body>
   <div id="navbar-placeholder"></div>
 
-  <section class="course-banner">
-    <div class="container">
-      <h1>Curso de CSS</h1>
-      <p class="course-description">Aprenda Cascading Style Sheets (CSS) para estilizar páginas web. CSS permite controlar cores, layouts, fontes e muito mais para criar interfaces atraentes.</p>
+  <section class="course-banner" style="background-image: url('../imgs/banners/css-banner.jpg'); background-size: cover; background-position: center;">
+    <div class="course-banner-overlay">
+      <div class="container">
+        <h1><i class="fab fa-css3-alt"></i> Curso de CSS</h1>
+        <p class="course-description">Domine a arte de estilizar páginas web com CSS. Aprenda a criar layouts modernos, responsivos e visualmente atraentes.</p>
+      </div>
     </div>
   </section>
 
@@ -26,30 +29,40 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8">
-          <h2>Vídeos do Curso</h2>
-          <p>Assista aos vídeos abaixo para aprender CSS do básico ao avançado:</p>
-          <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/videoseries?list=PLUqYHcZLVa6YfYlK_rLA1Sk8doeYZJRZN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="mt-4">
-            <button id="video-watched-btn" class="btn btn-primary" onclick="markVideoWatched('css')">Marcar Vídeo como Assistido</button>
+          <div class="video-section">
+            <h2><i class="fas fa-video"></i> Vídeos do Curso</h2>
+            <p>Assista aos vídeos abaixo para aprender CSS do básico ao avançado:</p>
+            <div class="video-container">
+              <iframe src="https://www.youtube.com/embed/videoseries?list=PLUqYHcZLVa6aGdz0xJt3UqxBCyYkuRdcY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="mt-4">
+              <button id="video-watched-btn" class="btn btn-primary" onclick="markVideoWatched('css')">
+                <i class="fas fa-check-circle"></i> Marcar Vídeo como Assistido
+              </button>
+            </div>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="quiz-section">
-            <h3>Quiz do Curso</h3>
+            <h3><i class="fas fa-question-circle"></i> Quiz do Curso</h3>
             <p>Responda às perguntas abaixo para completar o curso:</p>
             <div id="quiz-css">
               <!-- Quiz questions will be loaded here -->
             </div>
-            <button id="submit-quiz-css" class="btn btn-primary mt-3" onclick="submitQuiz('css')">Enviar Respostas</button>
+            <button id="submit-quiz-css" class="btn btn-primary mt-3" onclick="submitQuiz('css')">
+              <i class="fas fa-paper-plane"></i> Enviar Respostas
+            </button>
             <div id="quiz-result-css" class="quiz-result mt-3"></div>
           </div>
         </div>
       </div>
-      <div class="mt-4 text-center">
-        <a href="html.html" class="btn btn-outline-secondary me-2">Voltar: HTML</a>
-        <a href="js.html" class="btn btn-primary">Próximo: JavaScript</a>
+      <div class="mt-5 text-center course-navigation">
+        <a href="../index.html" class="btn btn-outline-secondary me-2">
+          <i class="fas fa-home"></i> Voltar ao Início
+        </a>
+        <a href="js.html" class="btn btn-primary">
+          Próximo: JavaScript <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
     </div>
   </main>
@@ -59,7 +72,7 @@
   <script src="../js/navbar.js"></script>
   <script src="../js/footer.js"></script>
   <script src="../js/quiz.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </body>
 
 </html>

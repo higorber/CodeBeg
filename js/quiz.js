@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 1
       }
     ],
-    cpp: [
+    "c++": [
       {
         question: "Qual palavra-chave é usada para entrada/saída em C++?",
         options: ["cin/cout", "input/output", "read/write", "get/put"],
@@ -246,6 +246,19 @@ document.addEventListener('DOMContentLoaded', function() {
     ]
   };
 
+  // Course names mapping
+  const courseNames = {
+    'html': 'HTML',
+    'css': 'CSS',
+    'js': 'JavaScript',
+    'python': 'Python',
+    'java': 'Java',
+    'php': 'PHP',
+    'c': 'C',
+    'c++': 'C++',
+    'cs': 'C#'
+  };
+
   // Load quiz for current page
   const currentPage = window.location.pathname.split('/').pop().split('.')[0];
   if (quizzes[currentPage]) {
@@ -254,6 +267,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function loadQuiz(course) {
     const quizContainer = document.getElementById(`quiz-${course}`);
+    if (!quizContainer) return;
+    
     const questions = quizzes[course];
 
     questions.forEach((q, index) => {
@@ -265,12 +280,29 @@ document.addEventListener('DOMContentLoaded', function() {
           ${q.options.map((option, i) => `
             <label class="quiz-option">
               <input type="radio" name="q${index}" value="${i}">
-              ${option}
+              <span>${option}</span>
             </label>
           `).join('')}
         </div>
       `;
       quizContainer.appendChild(questionDiv);
+    });
+
+    // Add click event to quiz options
+    document.querySelectorAll('.quiz-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const radio = this.querySelector('input[type="radio"]');
+        radio.checked = true;
+        
+        // Remove selected class from siblings
+        const parent = this.parentElement;
+        parent.querySelectorAll('.quiz-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        
+        // Add selected class to this option
+        this.classList.add('selected');
+      });
     });
   }
 
@@ -279,7 +311,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const watched = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
     watched[course] = true;
     localStorage.setItem('watchedVideos', JSON.stringify(watched));
-    alert('Vídeo marcado como assistido!');
+    
+    const btn = document.getElementById('video-watched-btn');
+    btn.textContent = '✓ Vídeo Assistido';
+    btn.classList.add('btn-success');
+    btn.classList.remove('btn-primary');
+    btn.disabled = true;
+    
     checkCompletion(course);
   };
 
@@ -289,28 +327,47 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultDiv = document.getElementById(`quiz-result-${course}`);
     let correct = 0;
     let total = questions.length;
+    let allAnswered = true;
 
     questions.forEach((q, index) => {
       const selected = document.querySelector(`input[name="q${index}"]:checked`);
-      if (selected && parseInt(selected.value) === q.correct) {
+      if (!selected) {
+        allAnswered = false;
+      } else if (parseInt(selected.value) === q.correct) {
         correct++;
       }
     });
 
+    if (!allAnswered) {
+      resultDiv.className = 'quiz-result error';
+      resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Por favor, responda todas as perguntas antes de enviar!';
+      return;
+    }
+
     const percentage = (correct / total) * 100;
-    const passed = percentage >= 70; // 70% to pass
+    const passed = percentage >= 70;
 
     if (passed) {
       resultDiv.className = 'quiz-result success';
-      resultDiv.textContent = `Parabéns! Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%).`;
+      resultDiv.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        <strong>Parabéns!</strong> Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%).
+        <button class="btn btn-success mt-3" onclick="generateCertificate('${course}', ${percentage.toFixed(1)})">
+          <i class="fas fa-certificate"></i> Gerar Certificado
+        </button>
+      `;
     } else {
       resultDiv.className = 'quiz-result error';
-      resultDiv.textContent = `Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%). Tente novamente para obter pelo menos 70%.`;
+      resultDiv.innerHTML = `
+        <i class="fas fa-times-circle"></i>
+        Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%). 
+        <br>Tente novamente para obter pelo menos 70% e conquistar seu certificado!
+      `;
     }
 
     // Save quiz result
     const quizResults = JSON.parse(localStorage.getItem('quizResults') || '{}');
-    quizResults[course] = { correct, total, passed };
+    quizResults[course] = { correct, total, passed, percentage: percentage.toFixed(1) };
     localStorage.setItem('quizResults', JSON.stringify(quizResults));
 
     if (passed) {
@@ -318,18 +375,302 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
+  // Generate certificate
+  window.generateCertificate = function(course, percentage) {
+    const courseName = courseNames[course] || course.toUpperCase();
+    const date = new Date().toLocaleDateString('pt-BR');
+    
+    // Create certificate HTML
+    const certificateHTML = `
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificado - ${courseName}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .certificate-container {
+      background: white;
+      max-width: 900px;
+      width: 100%;
+      padding: 60px 80px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      position: relative;
+      border: 15px solid #3ca2a7;
+    }
+    
+    .certificate-container::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid #3ca2a7;
+      pointer-events: none;
+    }
+    
+    .certificate-header {
+      margin-bottom: 30px;
+    }
+    
+    .certificate-logo {
+      font-size: 3rem;
+      color: #3ca2a7;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .certificate-title {
+      font-size: 2.5rem;
+      color: #333;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    
+    .certificate-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 40px;
+    }
+    
+    .certificate-body {
+      margin: 40px 0;
+      line-height: 2;
+    }
+    
+    .certificate-text {
+      font-size: 1.1rem;
+      color: #444;
+      margin-bottom: 20px;
+    }
+    
+    .certificate-course {
+      font-size: 2rem;
+      color: #3ca2a7;
+      font-weight: 700;
+      margin: 30px 0;
+      text-transform: uppercase;
+    }
+    
+    .certificate-score {
+      font-size: 1.3rem;
+      color: #28a745;
+      font-weight: 600;
+      margin: 20px 0;
+    }
+    
+    .certificate-date {
+      font-size: 1rem;
+      color: #666;
+      margin: 30px 0;
+    }
+    
+    .certificate-footer {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .signature-block {
+      text-align: center;
+      min-width: 200px;
+    }
+    
+    .signature-line {
+      border-top: 2px solid #333;
+      margin-bottom: 10px;
+      padding-top: 5px;
+    }
+    
+    .signature-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+    
+    .signature-title {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #3ca2a7;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(60, 162, 167, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .print-button:hover {
+      background: #2e8b91;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(60, 162, 167, 0.6);
+    }
+    
+    @media print {
+      body {
+        background: white;
+      }
+      
+      .print-button {
+        display: none;
+      }
+      
+      .certificate-container {
+        box-shadow: none;
+        max-width: 100%;
+        page-break-inside: avoid;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .certificate-container {
+        padding: 40px 30px;
+      }
+      
+      .certificate-title {
+        font-size: 1.8rem;
+      }
+      
+      .certificate-course {
+        font-size: 1.5rem;
+      }
+      
+      .print-button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-button" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+  
+  <div class="certificate-container">
+    <div class="certificate-header">
+      <div class="certificate-logo">CodBeg</div>
+      <h1 class="certificate-title">Certificado de Conclusão</h1>
+      <p class="certificate-subtitle">Portal de Programação para Iniciantes</p>
+    </div>
+    
+    <div class="certificate-body">
+      <p class="certificate-text">
+        Certificamos que o(a) aluno(a) concluiu com êxito o curso de
+      </p>
+      
+      <h2 class="certificate-course">${courseName}</h2>
+      
+      <p class="certificate-score">
+        Com aproveitamento de ${percentage}%
+      </p>
+      
+      <p class="certificate-date">
+        Emitido em ${date}
+      </p>
+    </div>
+    
+    <div class="certificate-footer">
+      <div class="signature-block">
+        <div class="signature-line">
+          <p class="signature-name">Beatriz Silva</p>
+        </div>
+        <p class="signature-title">Coordenadora</p>
+      </div>
+      
+      <div class="signature-block">
+        <div class="signature-line">
+          <p class="signature-name">Danilo Santos</p>
+        </div>
+        <p class="signature-title">Instrutor</p>
+      </div>
+      
+      <div class="signature-block">
+        <div class="signature-line">
+          <p class="signature-name">Eduardo Costa</p>
+        </div>
+        <p class="signature-title">Desenvolvedor</p>
+      </div>
+      
+      <div class="signature-block">
+        <div class="signature-line">
+          <p class="signature-name">Larissa Oliveira</p>
+        </div>
+        <p class="signature-title">Designer</p>
+      </div>
+      
+      <div class="signature-block">
+        <div class="signature-line">
+          <p class="signature-name">Kennedy Alves</p>
+        </div>
+        <p class="signature-title">Diretor</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+    
+    // Open certificate in new window
+    const newWindow = window.open('', '_blank');
+    newWindow.document.write(certificateHTML);
+    newWindow.document.close();
+  };
+
   function checkCompletion(course) {
     const watched = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
     const quizResults = JSON.parse(localStorage.getItem('quizResults') || '{}');
 
     if (watched[course] && quizResults[course]?.passed) {
-      // Mark course as completed
       const completed = JSON.parse(localStorage.getItem('completedCourses') || '[]');
       if (!completed.includes(course)) {
         completed.push(course);
         localStorage.setItem('completedCourses', JSON.stringify(completed));
-        alert('Parabéns! Você completou o curso de ' + course.toUpperCase() + '!');
       }
+    }
+  }
+
+  // Check if video was already watched
+  const watched = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
+  if (watched[currentPage]) {
+    const btn = document.getElementById('video-watched-btn');
+    if (btn) {
+      btn.textContent = '✓ Vídeo Assistido';
+      btn.classList.add('btn-success');
+      btn.classList.remove('btn-primary');
+      btn.disabled = true;
     }
   }
 });
