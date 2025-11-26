@@ -997,3 +997,38 @@ a:hover {
     font-size: 0.9rem;
   }
 }
+
+
+/* Estilos da Página de Contato */
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.card.shadow-sm {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.card.shadow-sm:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-custom-btn {
+    background-color: #3ca2a7;
+    border-color: #3ca2a7;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-custom-btn:hover {
+    background-color: #328a8e;
+    border-color: #328a8e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(60, 162, 167, 0.3);
+}
