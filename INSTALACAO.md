@@ -150,7 +150,7 @@ CodeBeg/
 │   ├── c++.html                 # ✅ Atualizado
 │   └── cs.html                  # ✅ Atualizado
 ├── imgs/                        # Imagens dos cursos
-├── imgCodBeg/                   # Imagens do site
+├── imgCodeBeg/                   # Imagens do site
 ├── index.html                   # Página inicial
 ├── contato.html                 # Página de contato
 ├── footer.html                  # Template do footer

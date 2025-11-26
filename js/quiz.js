@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <div class="certificate-container">
     <div class="certificate-header">
-      <div class="certificate-logo">CodBeg</div>
+      <div class="certificate-logo">CodeBeg</div>
       <h1 class="certificate-title">Certificado de Conclusão</h1>
       <p class="certificate-subtitle">Portal de Programação para Iniciantes</p>
     </div>
