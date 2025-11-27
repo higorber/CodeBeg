@@ -8,19 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 0
       },
       {
-        question: "Qual tag é usada para criar um parágrafo em HTML?",
-        options: ["<p>", "<div>", "<span>", "<h1>"],
+        question: "Qual tag cria um link?",
+        options: ["<a>", "<link>", "<href>", "<url>"],
         correct: 0
       },
       {
-        question: "Qual atributo é usado para definir o texto alternativo de uma imagem?",
-        options: ["title", "alt", "src", "href"],
-        correct: 1
+        question: "Qual tag representa um título principal?",
+        options: ["<h1>", "<p>", "<div>", "<span>"],
+        correct: 0
       },
       {
-        question: "Qual tag é usada para criar um link em HTML?",
-        options: ["<link>", "<a>", "<href>", "<url>"],
-        correct: 1
+        question: "Qual tag representa um parágrafo?",
+        options: ["<p>", "<div>", "<span>", "<h1>"],
+        correct: 0
       },
       {
         question: "Qual é a estrutura básica de um documento HTML?",
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     js: [
       {
         question: "Qual palavra-chave é usada para declarar uma variável em JavaScript?",
-        options: ["var", "let", "const", "Todas as acima"],
+        options: ["var", "let", "const", "Todas as anteriores"],
         correct: 3
       },
       {
@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function() {
     ],
     php: [
       {
-        question: "Como iniciar um bloco PHP?",
-        options: ["<?php", "<php>", "<?", "<script>"],
+        question: "Qual é a tag correta de abertura do PHP?",
+        options: ["<?php", "<?", "<script language='php'>", "<php>"],
         correct: 0
       },
       {
@@ -259,9 +259,34 @@ document.addEventListener('DOMContentLoaded', function() {
     'cs': 'C#'
   };
 
+  // Function to reset progress on page load
+  function resetProgress(course) {
+    localStorage.removeItem('watchedVideos');
+    localStorage.removeItem('quizResults');
+    localStorage.removeItem('completedCourses');
+    
+    // Re-initialize the button state
+    const btn = document.getElementById('video-watched-btn');
+    if (btn) {
+      btn.textContent = 'Marcar Vídeo como Assistido';
+      btn.classList.remove('btn-success');
+      btn.classList.add('btn-primary');
+      btn.disabled = false;
+    }
+    
+    // Clear quiz result display
+    const resultDiv = document.getElementById(`quiz-result-${course}`);
+    if (resultDiv) {
+      resultDiv.innerHTML = '';
+      resultDiv.className = 'quiz-result mt-3';
+    }
+  }
+
   // Load quiz for current page
   const currentPage = window.location.pathname.split('/').pop().split('.')[0];
   if (quizzes[currentPage]) {
+    // Reset progress for the current course on every load
+    resetProgress(currentPage);
     loadQuiz(currentPage);
   }
 
@@ -352,9 +377,13 @@ document.addEventListener('DOMContentLoaded', function() {
       resultDiv.innerHTML = `
         <i class="fas fa-check-circle"></i>
         <strong>Parabéns!</strong> Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%).
-        <button class="btn btn-success mt-3" onclick="generateCertificate('${course}', ${percentage.toFixed(1)})">
-          <i class="fas fa-certificate"></i> Gerar Certificado
-        </button>
+        <div id="certificate-form-${course}" class="mt-3">
+          <p>Insira seu nome completo para emissão do certificado:</p>
+          <input type="text" id="full-name-${course}" class="form-control mb-2" placeholder="Seu Nome Completo" required>
+          <button class="btn btn-success" onclick="requestCertificate('${course}', ${percentage.toFixed(1)})">
+            <i class="fas fa-certificate"></i> Gerar Certificado
+          </button>
+        </div>
       `;
     } else {
       resultDiv.className = 'quiz-result error';
@@ -375,8 +404,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
+  // Request certificate (get user name)
+  window.requestCertificate = function(course, percentage) {
+    const fullNameInput = document.getElementById(`full-name-${course}`);
+    const fullName = fullNameInput.value.trim();
+
+    if (fullName.length < 5) {
+      alert('Por favor, insira seu nome completo (mínimo 5 caracteres) para a emissão do certificado.');
+      fullNameInput.focus();
+      return;
+    }
+
+    generateCertificate(course, percentage, fullName);
+  };
+
   // Generate certificate
-  window.generateCertificate = function(course, percentage) {
+  window.generateCertificate = function(course, percentage, fullName) {
     const courseName = courseNames[course] || course.toUpperCase();
     const date = new Date().toLocaleDateString('pt-BR');
     
@@ -588,10 +631,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <div class="certificate-body">
       <p class="certificate-text">
-        Certificamos que o(a) aluno(a) concluiu com êxito o curso de
+        Certificamos que o(a) aluno(a)
       </p>
       
-      <h2 class="certificate-course">${courseName}</h2>
+      <h2 class="certificate-course" style="font-size: 2.5rem; color: #333; margin: 10px 0;">${fullName}</h2>
+      
+      <p class="certificate-text">
+        concluiu com êxito o curso de
+      </p>
+      
+      <h3 class="certificate-course">${courseName}</h3>
       
       <p class="certificate-score">
         Com aproveitamento de ${percentage}%
@@ -662,15 +711,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Check if video was already watched
-  const watched = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
-  if (watched[currentPage]) {
-    const btn = document.getElementById('video-watched-btn');
-    if (btn) {
-      btn.textContent = '✓ Vídeo Assistido';
-      btn.classList.add('btn-success');
-      btn.classList.remove('btn-primary');
-      btn.disabled = true;
-    }
-  }
+  // Removed redundant check as resetProgress handles it on load
 });
