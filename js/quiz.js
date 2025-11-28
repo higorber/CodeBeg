@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+
   // Quiz data for each course
   const quizzes = {
     html: [
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 0
       }
     ],
+
     css: [
       {
         question: "O que significa CSS?",
@@ -55,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 1
       }
     ],
+
     js: [
       {
         question: "Qual palavra-chave é usada para declarar uma variável em JavaScript?",
@@ -82,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 1
       }
     ],
+
     python: [
       {
         question: "Como imprimir 'Olá, Mundo!' em Python?",
@@ -109,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 0
       }
     ],
+
     java: [
       {
         question: "Qual é a assinatura do método main em Java?",
@@ -136,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 3
       }
     ],
+
     php: [
       {
         question: "Qual é a tag correta de abertura do PHP?",
@@ -163,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 0
       }
     ],
+
     c: [
       {
         question: "Qual é a função principal em um programa C?",
@@ -190,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 1
       }
     ],
+
     "c++": [
       {
         question: "Qual palavra-chave é usada para entrada/saída em C++?",
@@ -217,6 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         correct: 2
       }
     ],
+
     cs: [
       {
         question: "Qual é a extensão de arquivo para código C#?",
@@ -246,46 +255,43 @@ document.addEventListener('DOMContentLoaded', function() {
     ]
   };
 
-  // Course names mapping
+  // Mapa de nomes bonitos para certificado
   const courseNames = {
-    'html': 'HTML',
-    'css': 'CSS',
-    'js': 'JavaScript',
-    'python': 'Python',
-    'java': 'Java',
-    'php': 'PHP',
-    'c': 'C',
-    'c++': 'C++',
-    'cs': 'C#'
+    html: "HTML",
+    css: "CSS",
+    js: "JavaScript",
+    python: "Python",
+    java: "Java",
+    php: "PHP",
+    c: "C",
+    "c++": "C++",
+    cs: "C#"
   };
 
-  // Function to reset progress on page load
+  // Reset progress
   function resetProgress(course) {
-    localStorage.removeItem('watchedVideos');
-    localStorage.removeItem('quizResults');
-    localStorage.removeItem('completedCourses');
-    
-    // Re-initialize the button state
-    const btn = document.getElementById('video-watched-btn');
+    localStorage.removeItem("watchedVideos");
+    localStorage.removeItem("quizResults");
+    localStorage.removeItem("completedCourses");
+
+    const btn = document.getElementById("video-watched-btn");
     if (btn) {
-      btn.textContent = 'Marcar Vídeo como Assistido';
-      btn.classList.remove('btn-success');
-      btn.classList.add('btn-primary');
+      btn.textContent = "Marcar Vídeo como Assistido";
+      btn.classList.remove("btn-success");
+      btn.classList.add("btn-primary");
       btn.disabled = false;
     }
-    
-    // Clear quiz result display
+
     const resultDiv = document.getElementById(`quiz-result-${course}`);
     if (resultDiv) {
-      resultDiv.innerHTML = '';
-      resultDiv.className = 'quiz-result mt-3';
+      resultDiv.innerHTML = "";
+      resultDiv.className = "quiz-result mt-3";
     }
   }
 
-  // Load quiz for current page
-  const currentPage = window.location.pathname.split('/').pop().split('.')[0];
+  // Load quiz automatically
+  const currentPage = window.location.pathname.split("/").pop().split(".")[0];
   if (quizzes[currentPage]) {
-    // Reset progress for the current course on every load
     resetProgress(currentPage);
     loadQuiz(currentPage);
   }
@@ -293,61 +299,62 @@ document.addEventListener('DOMContentLoaded', function() {
   function loadQuiz(course) {
     const quizContainer = document.getElementById(`quiz-${course}`);
     if (!quizContainer) return;
-    
+
     const questions = quizzes[course];
 
     questions.forEach((q, index) => {
-      const questionDiv = document.createElement('div');
-      questionDiv.className = 'quiz-question';
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "quiz-question";
       questionDiv.innerHTML = `
         <h4>${index + 1}. ${q.question}</h4>
         <div class="quiz-options">
-          ${q.options.map((option, i) => `
+          ${q.options
+            .map(
+              (option, i) => `
             <label class="quiz-option">
               <input type="radio" name="q${index}" value="${i}">
               <span>${option}</span>
             </label>
-          `).join('')}
+          `
+            )
+            .join("")}
         </div>
       `;
       quizContainer.appendChild(questionDiv);
     });
 
-    // Add click event to quiz options
-    document.querySelectorAll('.quiz-option').forEach(option => {
-      option.addEventListener('click', function() {
+    document.querySelectorAll(".quiz-option").forEach(option => {
+      option.addEventListener("click", function () {
         const radio = this.querySelector('input[type="radio"]');
         radio.checked = true;
-        
-        // Remove selected class from siblings
+
         const parent = this.parentElement;
-        parent.querySelectorAll('.quiz-option').forEach(opt => {
-          opt.classList.remove('selected');
+        parent.querySelectorAll(".quiz-option").forEach(opt => {
+          opt.classList.remove("selected");
         });
-        
-        // Add selected class to this option
-        this.classList.add('selected');
+
+        this.classList.add("selected");
       });
     });
   }
 
   // Mark video as watched
-  window.markVideoWatched = function(course) {
-    const watched = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
+  window.markVideoWatched = function (course) {
+    const watched = JSON.parse(localStorage.getItem("watchedVideos") || "{}");
     watched[course] = true;
-    localStorage.setItem('watchedVideos', JSON.stringify(watched));
-    
-    const btn = document.getElementById('video-watched-btn');
-    btn.textContent = '✓ Vídeo Assistido';
-    btn.classList.add('btn-success');
-    btn.classList.remove('btn-primary');
+    localStorage.setItem("watchedVideos", JSON.stringify(watched));
+
+    const btn = document.getElementById("video-watched-btn");
+    btn.textContent = "✓ Vídeo Assistido";
+    btn.classList.add("btn-success");
+    btn.classList.remove("btn-primary");
     btn.disabled = true;
-    
+
     checkCompletion(course);
   };
 
   // Submit quiz
-  window.submitQuiz = function(course) {
+  window.submitQuiz = function (course) {
     const questions = quizzes[course];
     const resultDiv = document.getElementById(`quiz-result-${course}`);
     let correct = 0;
@@ -364,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (!allAnswered) {
-      resultDiv.className = 'quiz-result error';
+      resultDiv.className = "quiz-result error";
       resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Por favor, responda todas as perguntas antes de enviar!';
       return;
     }
@@ -373,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passed = percentage >= 70;
 
     if (passed) {
-      resultDiv.className = 'quiz-result success';
+      resultDiv.className = "quiz-result success";
       resultDiv.innerHTML = `
         <i class="fas fa-check-circle"></i>
         <strong>Parabéns!</strong> Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%).
@@ -386,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       `;
     } else {
-      resultDiv.className = 'quiz-result error';
+      resultDiv.className = "quiz-result error";
       resultDiv.innerHTML = `
         <i class="fas fa-times-circle"></i>
         Você acertou ${correct}/${total} perguntas (${percentage.toFixed(1)}%). 
@@ -394,23 +401,24 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
     }
 
-    // Save quiz result
-    const quizResults = JSON.parse(localStorage.getItem('quizResults') || '{}');
-    quizResults[course] = { correct, total, passed, percentage: percentage.toFixed(1) };
-    localStorage.setItem('quizResults', JSON.stringify(quizResults));
+    const quizResults = JSON.parse(localStorage.getItem("quizResults") || "{}");
+    quizResults[course] = {
+      correct,
+      total,
+      passed,
+      percentage: percentage.toFixed(1)
+    };
+    localStorage.setItem("quizResults", JSON.stringify(quizResults));
 
-    if (passed) {
-      checkCompletion(course);
-    }
+    if (passed) checkCompletion(course);
   };
 
-  // Request certificate (get user name)
-  window.requestCertificate = function(course, percentage) {
+  window.requestCertificate = function (course, percentage) {
     const fullNameInput = document.getElementById(`full-name-${course}`);
     const fullName = fullNameInput.value.trim();
 
     if (fullName.length < 5) {
-      alert('Por favor, insira seu nome completo (mínimo 5 caracteres) para a emissão do certificado.');
+      alert("Por favor, insira seu nome completo (mínimo 5 caracteres) para a emissão do certificado.");
       fullNameInput.focus();
       return;
     }
@@ -419,11 +427,11 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   // Generate certificate
-  window.generateCertificate = function(course, percentage, fullName) {
+  window.generateCertificate = function (course, percentage, fullName) {
     const courseName = courseNames[course] || course.toUpperCase();
-    const date = new Date().toLocaleDateString('pt-BR');
-    
-    // Create certificate HTML
+    const date = new Date().toLocaleDateString("pt-BR");
+
+    // CERTIFICATE HTML (interrompido)
     const certificateHTML = `
 <!DOCTYPE html>
 <html lang="pt-br">
