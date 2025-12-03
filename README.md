@@ -1,4 +1,4 @@
-# 📘 CodeBeg – Um site para você aprender, perguntar e codificar.
+# < CodeBeg /> – Um site para você aprender, perguntar e codificar. 👨‍💻 
 
 O **CodeBeg** é um portal desenvolvido para apoiar estudantes que estão iniciando no mundo da programação. O site reúne videoaulas organizadas das principais linguagens utilizadas no mercado, oferecendo um ambiente simples, intuitivo e acessível para estudos.
 
