@@ -1,259 +1,375 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   // Quiz data for each course
-  const quizzes = {
-    html: [
-      {
-        question: "O que significa HTML?",
-        options: ["HyperText Markup Language", "High Tech Modern Language", "Home Tool Markup Language", "Hyperlink and Text Markup Language"],
-        correct: 0
-      },
-      {
-        question: "Qual tag cria um link?",
-        options: ["<a>", "<link>", "<href>", "<url>"],
-        correct: 0
-      },
-      {
-        question: "Qual tag representa um título principal?",
-        options: ["<h1>", "<p>", "<div>", "<span>"],
-        correct: 0
-      },
-      {
-        question: "Qual tag representa um parágrafo?",
-        options: ["<p>", "<div>", "<span>", "<h1>"],
-        correct: 0
-      },
-      {
-        question: "Qual é a estrutura básica de um documento HTML?",
-        options: ["<html><head><body>", "<body><head><html>", "<head><body><html>", "<html><body><head>"],
-        correct: 0
-      }
-    ],
+const quizzes = {
+  html: [
+    {
+      question: "Qual é a função principal das tags em HTML?",
+      options: [
+        "Criar estilos",
+        "Estruturar conteúdo da página",
+        "Controlar banco de dados",
+        "Inserir Python"
+      ],
+      correct: 1
+    },
+    {
+      question: "Tag usada para link:",
+      options: ["&lt;p&gt;", "&lt;a&gt;", "&lt;link&gt;", "&lt;h1&gt;"],
+      correct: 1
+    },
+    {
+      question: "Função da tag <body>:",
+      options: [
+        "Armazenar título",
+        "Conter elementos visíveis da página",
+        "Definir CSS",
+        "Inserir metadados"
+      ],
+      correct: 1
+    },
+    {
+      question: "O que vai dentro de <head>?",
+      options: [
+        "Parágrafos",
+        "Conteúdo principal",
+        "Informações da página, título e estilos",
+        "Rodapé"
+      ],
+      correct: 2
+    },
+    {
+      question: "Tag para parágrafos:",
+      options: ["&lt;text&gt;", "&lt;p&gt;", "&lt;h1&gt;", "&lt;div&gt;"],
+      correct: 1
+    }
+  ],
 
-    css: [
-      {
-        question: "O que significa CSS?",
-        options: ["Computer Style Sheets", "Creative Style Sheets", "Cascading Style Sheets", "Colorful Style Sheets"],
-        correct: 2
-      },
-      {
-        question: "Como selecionar um elemento com id 'header' em CSS?",
-        options: [".header", "#header", "header", "*header"],
-        correct: 1
-      },
-      {
-        question: "Qual propriedade CSS é usada para alterar a cor do texto?",
-        options: ["text-color", "color", "font-color", "text-style"],
-        correct: 1
-      },
-      {
-        question: "Como adicionar um comentário em CSS?",
-        options: ["// comentário", "/* comentário */", "<!-- comentário -->", "# comentário"],
-        correct: 1
-      },
-      {
-        question: "Qual é a propriedade CSS para definir o espaçamento interno de um elemento?",
-        options: ["margin", "padding", "border", "spacing"],
-        correct: 1
-      }
-    ],
+  css: [
+    {
+      question: "Significado de CSS:",
+      options: [
+        "Computer Style System",
+        "Cascading Style Sheets",
+        "Central Style Service",
+        "Code Style Syntax"
+      ],
+      correct: 1
+    },
+    {
+      question: "Para que serve CSS?",
+      options: [
+        "Criar conteúdo",
+        "Controlar estrutura",
+        "Definir estilos e aparência",
+        "Executar lógica"
+      ],
+      correct: 2
+    },
+    {
+      question: "Cor de fundo correta:",
+      options: [
+        "background-color: blue;",
+        "bg-blue: true",
+        "color-background",
+        "style.background"
+      ],
+      correct: 0
+    },
+    {
+      question: "Seletor de ID:",
+      options: [".", "#", "*", "@"],
+      correct: 1
+    },
+    {
+      question: "Propriedade de tamanho da fonte:",
+      options: ["font-weight", "font-size", "text-style", "size-font"],
+      correct: 1
+    }
+  ],
 
-    js: [
-      {
-        question: "Qual palavra-chave é usada para declarar uma variável em JavaScript?",
-        options: ["var", "let", "const", "Todas as anteriores"],
-        correct: 3
-      },
-      {
-        question: "Como escrever um comentário de uma linha em JavaScript?",
-        options: ["// comentário", "/* comentário */", "<!-- comentário -->", "# comentário"],
-        correct: 0
-      },
-      {
-        question: "Qual método é usado para adicionar um elemento ao final de um array?",
-        options: ["push()", "add()", "append()", "insert()"],
-        correct: 0
-      },
-      {
-        question: "Como verificar se uma variável é um array em JavaScript?",
-        options: ["isArray()", "Array.isArray()", "typeof array", "instanceof Array"],
-        correct: 1
-      },
-      {
-        question: "Qual operador é usado para comparação estrita em JavaScript?",
-        options: ["==", "===", "!=", "!=="],
-        correct: 1
-      }
-    ],
+  js: [
+    {
+      question: "O que é JavaScript?",
+      options: [
+        "Linguagem de estilo",
+        "Linguagem de programação usada na web",
+        "Banco de dados",
+        "Editor de texto"
+      ],
+      correct: 1
+    },
+    {
+      question: "Comando para exibir no console:",
+      options: ["print()", "show()", "console.log()", "display()"],
+      correct: 2
+    },
+    {
+      question: "Como declarar variável corretamente?",
+      options: [
+        `var nome = "João";`,
+        `variable nome = "João";`,
+        `let nome: "João"`,
+        "make nome"
+      ],
+      correct: 0
+    },
+    {
+      question: "Símbolo para comentário de linha:",
+      options: ["&lt;!-- --&gt;", "//", "**", "##"],
+      correct: 1
+    },
+    {
+      question: "Operador de soma:",
+      options: ["-", "*", "/", "+"],
+      correct: 3
+    }
+  ],
 
-    python: [
-      {
-        question: "Como imprimir 'Olá, Mundo!' em Python?",
-        options: ["print('Olá, Mundo!')", "echo 'Olá, Mundo!'", "console.log('Olá, Mundo!')", "printf('Olá, Mundo!')"],
-        correct: 0
-      },
-      {
-        question: "Qual é a extensão de arquivo padrão para scripts Python?",
-        options: [".py", ".python", ".pt", ".script"],
-        correct: 0
-      },
-      {
-        question: "Como declarar uma lista em Python?",
-        options: ["list = []", "list = {}", "list = ()", "list = <>"],
-        correct: 0
-      },
-      {
-        question: "Qual palavra-chave é usada para definir uma função em Python?",
-        options: ["function", "def", "define", "func"],
-        correct: 1
-      },
-      {
-        question: "Como verificar o tipo de uma variável em Python?",
-        options: ["type()", "typeof()", "gettype()", "var_type()"],
-        correct: 0
-      }
-    ],
+  java: [
+    {
+      question: "Qual IDE foi utilizada no curso?",
+      options: ["Eclipse", "NetBeans", "IntelliJ IDEA", "BlueJ"],
+      correct: 2
+    },
+    {
+      question: "O que são classes Wrappers?",
+      options: [
+        "Versões orientadas a objetos dos tipos primitivos",
+        "Tipos que armazenam apenas texto",
+        "Não podem ser convertidas",
+        "Usadas só em POO"
+      ],
+      correct: 0
+    },
+    {
+      question: "Qual representa um loop while correto?",
+      options: [
+        "while (i < 10) { i++; }",
+        "while i < 10 { i++; }",
+        "loop (i < 10)",
+        "for (int i = 0; …)"
+      ],
+      correct: 0
+    },
+    {
+      question: "O que é um objeto?",
+      options: [
+        "Um método",
+        "Uma variável primitiva",
+        "Instância de classe com atributos e métodos",
+        "Função global"
+      ],
+      correct: 2
+    },
+    {
+      question: "Função dos getters e setters:",
+      options: [
+        "Criar classes",
+        "Acessar e modificar atributos privados de forma controlada",
+        "Executar loops",
+        "Substituir construtor"
+      ],
+      correct: 1
+    }
+  ],
 
-    java: [
-      {
-        question: "Qual é a assinatura do método main em Java?",
-        options: ["public static void main(String[] args)", "public void main(String args)", "static void main(String[] args)", "public static main(String[] args)"],
-        correct: 0
-      },
-      {
-        question: "Como declarar uma variável String em Java?",
-        options: ["String str;", "string str;", "str String;", "var str;"],
-        correct: 0
-      },
-      {
-        question: "Qual palavra-chave é usada para herança em Java?",
-        options: ["extends", "implements", "inherits", "super"],
-        correct: 0
-      },
-      {
-        question: "Como imprimir no console em Java?",
-        options: ["System.out.println();", "console.log();", "print();", "echo();"],
-        correct: 0
-      },
-      {
-        question: "Qual é o modificador de acesso padrão em Java?",
-        options: ["public", "private", "protected", "package-private"],
-        correct: 3
-      }
-    ],
+  php: [
+    {
+      question: "Tag correta de abertura:",
+      options: ["&lt;?php … ?&gt;", "&lt;php&gt;", "&lt;? … ?&gt;", "//php"],
+      correct: 0
+    },
+    {
+      question: "Tipo que guarda texto:",
+      options: ["int", "float", "string", "boolean"],
+      correct: 2
+    },
+    {
+      question: "Loop quando não se sabe quantas repetições haverá:",
+      options: ["for", "do…while", "while (condição) { }", "switch"],
+      correct: 2
+    },
+    {
+      question: "Sintaxe correta de função:",
+      options: [
+        "function calcular($a, $b) { }",
+        "função calcular",
+        "def calcular",
+        "function calcular[a, b]"
+      ],
+      correct: 0
+    },
+    {
+      question: "Extensão moderna e segura para BD:",
+      options: ["mysql_query", "mysqli_* ou PDO", "pg_query", "db_query"],
+      correct: 1
+    }
+  ],
 
-    php: [
-      {
-        question: "Qual é a tag correta de abertura do PHP?",
-        options: ["<?php", "<?", "<script language='php'>", "<php>"],
-        correct: 0
-      },
-      {
-        question: "Qual função é usada para conectar ao banco de dados MySQL em PHP?",
-        options: ["mysql_connect()", "mysqli_connect()", "pdo_connect()", "db_connect()"],
-        correct: 1
-      },
-      {
-        question: "Como declarar uma variável em PHP?",
-        options: ["$variavel", "var variavel", "variable", "#variavel"],
-        correct: 0
-      },
-      {
-        question: "Qual função é usada para incluir um arquivo em PHP?",
-        options: ["include()", "require()", "import()", "load()"],
-        correct: 0
-      },
-      {
-        question: "Como verificar se uma variável está definida em PHP?",
-        options: ["isset()", "defined()", "exists()", "is_set()"],
-        correct: 0
-      }
-    ],
+  python: [
+    {
+      question: "O que é uma linguagem de programação?",
+      options: [
+        "Apenas uma forma de desenhar",
+        "Um jogo de computador",
+        "Um conjunto de instruções usadas para criar programas",
+        "Um tipo de banco de dados"
+      ],
+      correct: 2
+    },
+    {
+      question: "Para que serve print()?",
+      options: [
+        "Apagar variáveis",
+        "Exibir algo na tela",
+        "Criar funções",
+        "Fechar o programa"
+      ],
+      correct: 1
+    },
+    {
+      question: "O que são variáveis?",
+      options: [
+        "Funções especiais",
+        "Pastas do computador",
+        "Espaços que guardam valores",
+        "Comandos de repetição"
+      ],
+      correct: 2
+    },
+    {
+      question: "Qual número representa um decimal?",
+      options: ["10", "3.14", "8", "1"],
+      correct: 1
+    },
+    {
+      question: "Para que serve input()?",
+      options: [
+        "Finalizar o programa",
+        "Ler informações digitadas pelo usuário",
+        "Criar listas",
+        "Converter texto em número"
+      ],
+      correct: 1
+    }
+  ],
 
-    c: [
-      {
-        question: "Qual é a função principal em um programa C?",
-        options: ["start()", "main()", "begin()", "init()"],
-        correct: 1
-      },
-      {
-        question: "Como declarar uma variável inteira em C?",
-        options: ["int x;", "integer x;", "var x;", "num x;"],
-        correct: 0
-      },
-      {
-        question: "Qual biblioteca contém a função printf()?",
-        options: ["<stdio.h>", "<stdlib.h>", "<string.h>", "<math.h>"],
-        correct: 0
-      },
-      {
-        question: "Como incluir comentários de uma linha em C?",
-        options: ["// comentário", "/* comentário */", "# comentário", "-- comentário"],
-        correct: 0
-      },
-      {
-        question: "Qual operador é usado para acesso a ponteiro em C?",
-        options: ["&", "*", "#", "@"],
-        correct: 1
-      }
-    ],
+  c: [
+    {
+      question: "Para que serve C?",
+      options: [
+        "Apenas para criar sites",
+        "Usada para sistemas, drivers, embarcados e softwares de alta performance",
+        "Somente para jogos",
+        "Apenas para cálculos simples"
+      ],
+      correct: 1
+    },
+    {
+      question: "O que é main()?",
+      options: [
+        "Um laço de repetição",
+        "Função principal onde o programa começa",
+        "Biblioteca externa",
+        "Variável global"
+      ],
+      correct: 1
+    },
+    {
+      question: "O que faz printf(\"Olá\");?",
+      options: [
+        "Cria um arquivo",
+        "Exibe o texto \"Olá\" no terminal",
+        "Apaga uma variável",
+        "Inicia um loop"
+      ],
+      correct: 1
+    },
+    {
+      question: "O que é variável em C?",
+      options: [
+        "Janela do sistema",
+        "Espaço que guarda valores",
+        "Função automática",
+        "Arquivo externo"
+      ],
+      correct: 1
+    },
+    {
+      question: "Por que precisa do ponto e vírgula ; ?",
+      options: [
+        "Para decorar o código",
+        "Para separar letras",
+        "Para indicar o fim do comando ao compilador",
+        "Para iniciar comentários"
+      ],
+      correct: 2
+    }
+  ],
 
-    "c++": [
-      {
-        question: "Qual palavra-chave é usada para entrada/saída em C++?",
-        options: ["cin/cout", "input/output", "read/write", "get/put"],
-        correct: 0
-      },
-      {
-        question: "Como declarar uma classe em C++?",
-        options: ["class NomeClasse {}", "Class NomeClasse {}", "struct NomeClasse {}", "object NomeClasse {}"],
-        correct: 0
-      },
-      {
-        question: "Qual é o operador de resolução de escopo em C++?",
-        options: [".", "::", "->", ":"],
-        correct: 1
-      },
-      {
-        question: "Como incluir a biblioteca iostream em C++?",
-        options: ["#include <iostream>", "#include 'iostream'", "import iostream", "using iostream"],
-        correct: 0
-      },
-      {
-        question: "Qual palavra-chave é usada para herança em C++?",
-        options: ["extends", "inherits", ":", "inherits from"],
-        correct: 2
-      }
-    ],
+  "c++": [
+    {
+      question: "Significado da sigla C++:",
+      options: ["C Mais Mais", "C Programming", "Code Progressive", "Computer Plus"],
+      correct: 0
+    },
+    {
+      question: "Criador do C++:",
+      options: [
+        "James Gosling",
+        "Bjarne Stroustrup",
+        "Dennis Ritchie",
+        "Guido van Rossum"
+      ],
+      correct: 1
+    },
+    {
+      question: "Década de criação:",
+      options: ["1950", "1960", "1970", "1980"],
+      correct: 3
+    },
+    {
+      question: "Tipo de linguagem:",
+      options: ["Interpretada", "Visual", "Compilada", "Scripts"],
+      correct: 2
+    },
+    {
+      question: "Base do C++:",
+      options: ["Java", "Python", "C", "Ruby"],
+      correct: 2
+    }
+  ],
 
-    cs: [
-      {
-        question: "Qual é a extensão de arquivo para código C#?",
-        options: [".cs", ".csharp", ".c#", ".net"],
-        correct: 0
-      },
-      {
-        question: "Como declarar uma variável string em C#?",
-        options: ["string str;", "String str;", "str string;", "var str = 'hello';"],
-        correct: 0
-      },
-      {
-        question: "Qual palavra-chave é usada para definir uma classe em C#?",
-        options: ["class", "Class", "struct", "object"],
-        correct: 0
-      },
-      {
-        question: "Como escrever no console em C#?",
-        options: ["Console.WriteLine();", "print();", "echo();", "System.out.println();"],
-        correct: 0
-      },
-      {
-        question: "Qual é o modificador de acesso padrão em C#?",
-        options: ["public", "private", "internal", "protected"],
-        correct: 1
-      }
-    ]
-  };
+  cs: [
+    {
+      question: "C# é lido como:",
+      options: ["C Sharp", "C Hash", "C Square", "C Code"],
+      correct: 0
+    },
+    {
+      question: "Quem desenvolveu C#?",
+      options: ["Google", "Microsoft", "IBM", "Apple"],
+      correct: 1
+    },
+    {
+      question: "Criado como parte de:",
+      options: ["DirectX", ".NET Framework", "MS-DOS", "Windows XP"],
+      correct: 1
+    },
+    {
+      question: "Usos mais comuns:",
+      options: ["Android", "Jogos 2D", "Desktop, web e jogos", "Apenas HTML"],
+      correct: 2
+    },
+    {
+      question: "Plataforma principal:",
+      options: ["Unity", "Unreal", ".NET", "Visual Basic"],
+      correct: 2
+    }
+  ]
+};
+
 
   // Mapa de nomes bonitos para certificado
   const courseNames = {
@@ -662,35 +778,35 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="certificate-footer">
       <div class="signature-block">
         <div class="signature-line">
-          <p class="signature-name">Beatriz Silva</p>
+          <p class="signature-name">Beatriz Lima</p>
         </div>
         <p class="signature-title">Coordenadora</p>
       </div>
       
       <div class="signature-block">
         <div class="signature-line">
-          <p class="signature-name">Danilo Santos</p>
+          <p class="signature-name">Danillo Santos</p>
         </div>
         <p class="signature-title">Instrutor</p>
       </div>
       
       <div class="signature-block">
         <div class="signature-line">
-          <p class="signature-name">Eduardo Costa</p>
+          <p class="signature-name">Eduardo Sousa</p>
         </div>
         <p class="signature-title">Desenvolvedor</p>
       </div>
       
       <div class="signature-block">
         <div class="signature-line">
-          <p class="signature-name">Larissa Oliveira</p>
+          <p class="signature-name">Larissa da Silva</p>
         </div>
         <p class="signature-title">Designer</p>
       </div>
       
       <div class="signature-block">
         <div class="signature-line">
-          <p class="signature-name">Kennedy Alves</p>
+          <p class="signature-name">Kennedy Samuel</p>
         </div>
         <p class="signature-title">Diretor</p>
       </div>

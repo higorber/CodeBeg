@@ -10,6 +10,44 @@
   <link href="css/main.css" rel="stylesheet">
   <script src="./js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <title>Contato - CodeBeg</title>
+<style>
+  .hero-section {
+  margin-bottom: 40px; /* espaço entre o menu (hero) e o card */
+}
+
+main.container {
+  padding-bottom: 40px; /* espaço antes do footer */
+}
+
+body {
+  background-color: #f4f7f9;
+}
+
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px !important;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.card .form-control {
+  width: 100%;
+  padding: 12px 16px;
+}
+
+.card label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block; /* garante que o label ocupa a linha toda */
+}
+
+textarea.form-control {
+  resize: vertical; /* permite aumentar pra baixo, não pro lado */
+  min-height: 130px;
+}
+
+</style>
 </head>
 
 <body>
@@ -26,7 +64,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
           <div class="card shadow-sm p-4">
-        <form action="https://formsubmit.co/tcccodebeg2025@gmail.com" method="POST">
+        <form action="https://formsubmit.co/profhigor.traine@gmail.com" method="POST">
           <div class="mb-3">
             <label for="nome" class="form-label"><i class="fas fa-user"></i> Nome:</label>
             <input type="text" class="form-control" name="name" id="nome" placeholder="Nome" maxlength="50" required>
@@ -41,7 +79,7 @@
           </div>
           <input type="hidden" name="_captcha" value="false"/>
           <input type="hidden" name="_autoresponse" value="Obrigado pela sua sugestão! Recebemos sua mensagem e vamos analisá-la. Em breve, você terá novidades sobre o CodeBeg."/>
-          <input type="hidden" name="_next" value="obrigado.html"/>
+          <input type="hidden" name="_next" value="./obrigado.html"/>
           <div class="text-center">
             <button type="submit" class="btn btn-custom-btn me-2"><i class="fas fa-paper-plane"></i> Enviar</button>
             <button type="reset" class="btn btn-secondary"><i class="fas fa-eraser"></i> Limpar</button>
