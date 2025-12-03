@@ -26,9 +26,10 @@ body {
 .card {
   background: #fff;
   border-radius: 20px;
-  padding: 30px !important;
+  padding: 30px 40px !important;
   margin-top: 20px;
   margin-bottom: 30px;
+  min-height: 500px; 
 }
 
 .card .form-control {
@@ -38,7 +39,7 @@ body {
 
 .card label {
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   display: block; /* garante que o label ocupa a linha toda */
 }
 
@@ -46,6 +47,25 @@ textarea.form-control {
   resize: vertical; /* permite aumentar pra baixo, não pro lado */
   min-height: 130px;
 }
+
+.star-rating {
+  display: flex;
+  justify-content: center; /* centraliza */
+  gap: 10px;
+  font-size: 35px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star-rating .fa-star {
+  transition: color 0.2s;
+}
+
+.star-rating .fa-star.hovered,
+.star-rating .fa-star.selected {
+  color: #f7d106; /* amarelo */
+}
+
 
 </style>
 </head>
@@ -76,6 +96,22 @@ textarea.form-control {
           <div class="mb-3">
             <label for="descricao" class="form-label"><i class="fas fa-comment-dots"></i> Sugestão ou Avaliação:</label>
             <textarea class="form-control" name="message" id="descricao" placeholder="Sugestão ou Avaliação" rows="5" maxlength="255" required></textarea>
+
+          <!-- AVALIAÇÃO EM ESTRELAS -->
+<div class="mb-3 text-center" style="margin-top: 14xpx; margin-bottom: 26px;">
+
+  <div class="star-rating">
+    <i class="fa-solid fa-star" data-value="1"></i>
+    <i class="fa-solid fa-star" data-value="2"></i>
+    <i class="fa-solid fa-star" data-value="3"></i>
+    <i class="fa-solid fa-star" data-value="4"></i>
+    <i class="fa-solid fa-star" data-value="5"></i>
+  </div>
+
+  <input type="hidden" name="rating" id="rating" required>
+</div>
+
+
           </div>
           <input type="hidden" name="_captcha" value="false"/>
           <input type="hidden" name="_autoresponse" value="Obrigado pela sua sugestão! Recebemos sua mensagem e vamos analisá-la. Em breve, você terá novidades sobre o CodeBeg."/>
@@ -91,6 +127,36 @@ textarea.form-control {
   </main>
 
   <div id="footer-placeholder"></div>
+
+<script>
+  const stars = document.querySelectorAll('.star-rating .fa-star');
+  const ratingInput = document.getElementById('rating');
+  let selectedRating = 0;
+
+  // Hover (passar o mouse)
+  stars.forEach(star => {
+    star.addEventListener('mouseover', function () {
+      const value = Number(this.dataset.value);
+      stars.forEach(s => s.classList.remove('hovered'));
+      for (let i = 0; i < value; i++) stars[i].classList.add('hovered');
+    });
+
+    // Remove hover quando sai da área
+    star.addEventListener('mouseout', function () {
+      stars.forEach(s => s.classList.remove('hovered'));
+    });
+
+    // Clique (fixa a avaliação)
+    star.addEventListener('click', function () {
+      selectedRating = Number(this.dataset.value);
+      ratingInput.value = selectedRating;
+
+      stars.forEach(s => s.classList.remove('selected'));
+      for (let i = 0; i < selectedRating; i++) stars[i].classList.add('selected');
+    });
+  });
+</script>
+
 
   <script src="js/navbar.js"></script>
   <script src="js/footer.js"></script>
