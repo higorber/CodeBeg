@@ -392,7 +392,7 @@ const quizzes = {
 
     const btn = document.getElementById("video-watched-btn");
     if (btn) {
-      btn.textContent = "Marcar Vídeo como Assistido";
+      btn.textContent = "Marcar como Assistido";
       btn.classList.remove("btn-success");
       btn.classList.add("btn-primary");
       btn.disabled = false;
